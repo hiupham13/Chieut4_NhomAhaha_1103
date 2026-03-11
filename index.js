@@ -7,16 +7,16 @@ const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = 3000;
-// Middleware
-app.use(cors());
 
-// Serve static files from 'public' folder
-app.use(express.static(join(__dirname, 'public')));
-// API route - Branch B
-app.get('/api/health', (req, res) => {
-  res.json({ health: 'OK', branch: 'B', uptime: process.uptime() });
+// Middleware parse JSON
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Route mặc định
+app.get('/', (req, res) => {
+  res.json({ message: 'Hello from Node.js + Express!' });
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server is running at http://localhost:${PORT}`);
+  console.log(`Server đang chạy tại http://localhost:${PORT}`);
 });
