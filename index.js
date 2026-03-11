@@ -1,17 +1,24 @@
-const express = require('express');
+import express from 'express';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
-// Middleware parse JSON
+// Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Route mặc định
-app.get('/', (req, res) => {
-  res.json({ message: 'Hello from Node.js + Express!' });
+// Serve static files from 'public' folder
+app.use(express.static(join(__dirname, 'public')));
+
+// API route - Branch A
+app.get('/api/status', (req, res) => {
+  res.json({ status: 'OK', branch: 'A', timestamp: new Date() });
 });
 
-// Khởi động server
 app.listen(PORT, () => {
-  console.log(`Server đang chạy tại http://localhost:${PORT}`);
+  console.log(`🚀 Server is running at http://localhost:${PORT}`);
 });
